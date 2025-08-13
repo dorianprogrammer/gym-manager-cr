@@ -1,18 +1,11 @@
-"use client";
+import ClientHomePage from "./ClientHomePage";
 
-import { AuthProvider } from "../contexts/AuthContext";
-import ProtectedRoute from "../components/ProtectedRoute";
-import Layout from "../components/Layout";
-import GymDashboard from "../components/GymDashboard";
+// Metadata for this specific page
+export const metadata = {
+  // title: "Iniciar Sesión | Gym Manager CR",
+  description: "Acceso para administradores del sistema de gestión de gimnasios en Costa Rica",
+};
 
-export default function Home() {
-  return (
-    <AuthProvider>
-      <ProtectedRoute>
-        <Layout>
-          <GymDashboard />
-        </Layout>
-      </ProtectedRoute>
-    </AuthProvider>
-  );
+export default function HomePage() {
+  return <ClientHomePage />;
 }

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Activity, Mail, Lock, Eye, EyeOff, AlertCircle } from "lucide-react";
-import { loginAdmin, resetPassword } from "../lib/auth";
+import { loginAdmin, resetPassword } from "../../lib/auth";
 
 export default function AdminLogin() {
   const [formData, setFormData] = useState({

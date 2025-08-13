@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 import { Activity, LogOut, Menu, X, Users, DollarSign, QrCode, BarChart3 } from "lucide-react";
-import { useAuth } from "../contexts/AuthContext";
-import ConfirmationModal from "./ConfirmationModal";
+import { useAuth } from "../../contexts/AuthContext";
+import ConfirmationModal from "../ui/ConfirmationModal";
 
 export default function Layout({ children }) {
   const { user, logout } = useAuth();

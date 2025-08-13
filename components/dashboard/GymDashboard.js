@@ -1,8 +1,20 @@
+// Update your GymDashboard.js to integrate member management
 import React, { useState, useEffect } from "react";
-import { Users, Activity, DollarSign, TrendingUp, Calendar, Clock, UserCheck, AlertCircle } from "lucide-react";
-import { getMembers, getCheckIns, getPayments } from "../lib/firebase";
+import {
+  Users,
+  Activity,
+  DollarSign,
+  TrendingUp,
+  Calendar,
+  Clock,
+  UserCheck,
+  AlertCircle,
+  UserPlus,
+} from "lucide-react";
+import MemberManagement from "../members/MemberManagement";
 
 export default function GymDashboard() {
+  const [activeSection, setActiveSection] = useState("dashboard"); // dashboard, members, checkins, payments
   const [stats, setStats] = useState({
     totalMembers: 0,
     activeMembers: 0,
@@ -19,37 +31,21 @@ export default function GymDashboard() {
 
   const loadDashboardData = async () => {
     try {
+      // Import Firebase functions dynamically to avoid SSR issues
+      const { getMembers } = await import("../../services/memberService");
+
       // Load members
       const { members } = await getMembers();
-
-      // Load recent check-ins
-      const { checkins } = await getCheckIns();
-
-      // Load payments
-      const { payments } = await getPayments();
 
       // Calculate stats
       const totalMembers = members?.length || 0;
       const activeMembers = members?.filter((m) => m.isActive)?.length || 0;
 
-      // Today's check-ins
-      const today = new Date().toDateString();
-      const todayCheckIns =
-        checkins?.filter((checkin) => {
-          const checkinDate = checkin.timestamp?.toDate?.()?.toDateString();
-          return checkinDate === today;
-        })?.length || 0;
+      // Today's check-ins (placeholder - you'll implement this later)
+      const todayCheckIns = 0;
 
-      // This month's revenue
-      const currentMonth = new Date().getMonth();
-      const currentYear = new Date().getFullYear();
-      const monthlyRevenue =
-        payments
-          ?.filter((payment) => {
-            const paymentDate = payment.date?.toDate?.();
-            return paymentDate?.getMonth() === currentMonth && paymentDate?.getFullYear() === currentYear;
-          })
-          ?.reduce((sum, payment) => sum + (payment.amount || 0), 0) || 0;
+      // This month's revenue (placeholder - you'll implement this later)
+      const monthlyRevenue = 0;
 
       setStats({
         totalMembers,
@@ -59,47 +55,18 @@ export default function GymDashboard() {
         loading: false,
       });
 
-      // Create recent activity feed
-      const activities = [];
-
-      // Add recent check-ins
-      checkins?.slice(0, 3).forEach((checkin) => {
-        const member = members?.find((m) => m.id === checkin.memberId);
-        if (member) {
-          activities.push({
-            id: checkin.id,
-            type: "checkin",
-            message: `${member.name} hizo check-in`,
-            time: checkin.timestamp?.toDate?.(),
-            icon: UserCheck,
-            color: "text-green-600",
-          });
-        }
-      });
-
-      // Add recent payments
-      payments?.slice(0, 2).forEach((payment) => {
-        const member = members?.find((m) => m.id === payment.memberId);
-        if (member) {
-          activities.push({
-            id: payment.id,
-            type: "payment",
-            message: `${member.name} realizó un pago de ₡${payment.amount?.toLocaleString()}`,
-            time: payment.date?.toDate?.(),
-            icon: DollarSign,
-            color: "text-blue-600",
-          });
-        }
-      });
-
-      // Sort by time and take top 5
-      activities.sort((a, b) => (b.time || 0) - (a.time || 0));
-      setRecentActivity(activities.slice(0, 5));
+      // Recent activity (placeholder for now)
+      setRecentActivity([]);
     } catch (error) {
       console.error("Error loading dashboard data:", error);
       setStats((prev) => ({ ...prev, loading: false }));
     }
   };
+
+  // If members section is selected, show member management
+  if (activeSection === "members") {
+    return <MemberManagement />;
+  }
 
   const formatTime = (date) => {
     if (!date) return "Hace un momento";
@@ -249,9 +216,12 @@ export default function GymDashboard() {
             <div className="px-4 py-5 sm:p-6">
               <h3 className="text-lg font-medium text-gray-900 mb-4">Acciones Rápidas</h3>
               <div className="space-y-3">
-                <button className="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+                <button
+                  onClick={() => setActiveSection("members")}
+                  className="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+                >
                   <Users className="h-4 w-4 mr-2" />
-                  Agregar Miembro
+                  Gestionar Miembros
                 </button>
                 <button className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                   <UserCheck className="h-4 w-4 mr-2" />

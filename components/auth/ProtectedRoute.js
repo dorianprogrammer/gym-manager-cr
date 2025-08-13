@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 import AdminLogin from "./AdminLogin";
 
 export default function ProtectedRoute({ children }) {
