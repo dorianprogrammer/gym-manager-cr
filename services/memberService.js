@@ -36,12 +36,14 @@ export const getMembers = async () => {
     const q = query(collection(db, "members"), orderBy("joinDate", "desc"));
     const querySnapshot = await getDocs(q);
     const members = [];
+    
     querySnapshot.forEach((doc) => {
       members.push({ id: doc.id, ...doc.data() });
     });
+
     return { success: true, members, error: null };
   } catch (error) {
-    console.error("Error fetching members:", error);
+    console.log("Error fetching members:", error);
     return { success: false, members: [], error: error.message };
   }
 };

@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import { UserPlus, Trash2 } from "lucide-react";
 import {
   addMember,
-  getMembers,
   updateMember,
   deleteMember,
   validateMemberForm,
@@ -18,41 +17,41 @@ import MemberForm from "./MemberForm";
 import ConfirmationModal from "../ui/ConfirmationModal";
 import { useNotification } from "@/hooks/useNotification";
 import MemberDetailCard from "./MemberDetailCard";
+import BackButton from "../ui/BackButton";
+
 export default function MemberManagement() {
-  // Notifications hook
   const notification = useNotification();
 
-  // Data states
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Filter states
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
 
-  // Modal states
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showMemberCard, setShowMemberCard] = useState(false);
   const [selectedMember, setSelectedMember] = useState(null);
 
-  // Form states
   const [formData, setFormData] = useState(getInitialFormData());
   const [formErrors, setFormErrors] = useState({});
   const [saving, setSaving] = useState(false);
 
-  // Load members on component mount
   useEffect(() => {
     loadMembers();
   }, []);
 
   const loadMembers = async () => {
     setLoading(true);
+
+    const { getMembers } = await import("../../services/memberService");
     const result = await getMembers();
     if (result.success) {
       setMembers(result.members);
     } else {
+      console.log('hola');
+      
       notification.error(`Error cargando miembros: ${result.error}`);
     }
     setLoading(false);
@@ -168,11 +167,17 @@ export default function MemberManagement() {
       {/* Header */}
       <div className="md:flex md:items-center md:justify-between">
         <div className="min-w-0 flex-1">
-          <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-            Gestión de Miembros
-          </h2>
-          <p className="mt-1 text-sm text-gray-500">Administra todos los miembros de tu gimnasio</p>
+          <div className="flex items-center gap-3">
+            <BackButton fallbackHref="/dashboard" />
+            <div>
+              <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+                Gestión de Miembros
+              </h2>
+              <p className="mt-1 text-sm text-gray-500">Administra todos los miembros de tu gimnasio</p>
+            </div>
+          </div>
         </div>
+
         <div className="mt-4 flex md:mt-0 md:ml-4">
           <button
             onClick={() => setShowAddModal(true)}
