@@ -1,14 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Activity, LogOut, Menu, X, Users, DollarSign, QrCode, BarChart3 } from "lucide-react";
-import { useAuth } from "../../contexts/AuthContext";
 import ConfirmationModal from "../ui/ConfirmationModal";
+import { useAuth } from "@/hooks/useAuth";
+import { AuthContext } from "@/contexts/AuthContext";
 
 export default function Layout({ children }) {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
+  const { logout } = useContext(AuthContext);
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);

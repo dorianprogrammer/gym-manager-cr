@@ -42,8 +42,8 @@ export default function AdminLogin() {
       }
       const result = await loginAdmin(formData.email, formData.password);
 
-      console.log("result.success", result.success);
       if (result.success) {
+
       } else {
         setError(result.error);
       }

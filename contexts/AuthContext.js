@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { onAuthChange, logoutAdmin } from "../lib/auth";
 
-const AuthContext = createContext({});
+export const AuthContext = createContext({});
 
 export function AuthProvider({ children }) {
   const [authState, setAuthState] = useState({
@@ -42,11 +42,3 @@ export function AuthProvider({ children }) {
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
-
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-  return context;
-};

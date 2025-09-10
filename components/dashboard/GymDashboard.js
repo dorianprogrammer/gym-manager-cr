@@ -6,6 +6,7 @@ import { formatTime } from "./GymDashboard.helper";
 import StatCard from "../ui/StatCard";
 import { useRouter } from "next/navigation";
 import { useNotification } from "@/hooks/useNotification";
+import { getMembers } from "@/services/memberService";
 
 export default function GymDashboard() {
   const [stats, setStats] = useState({
@@ -25,24 +26,27 @@ export default function GymDashboard() {
 
   const loadDashboardData = async () => {
     try {
-      const { getMembers } = await import("../../services/memberService");
+
+      console.log('holaaa');
+      
+      // const { getMewmbers } = await import("../../services/memberService");
       const { members } = await getMembers();
 
-      const totalMembers = members?.length || 0;
-      const activeMembers = members?.filter((m) => m.isActive)?.length || 0;
-      const todayCheckIns = 0;
+      // const totalMembers = members?.length || 0;
+      // const activeMembers = members?.filter((m) => m.isActive)?.length || 0;
+      // const todayCheckIns = 0;
 
-      const monthlyRevenue = 0;
+      // const monthlyRevenue = 0;
 
-      setStats({
-        totalMembers,
-        activeMembers,
-        todayCheckIns,
-        monthlyRevenue,
-        loading: false,
-      });
+      // setStats({
+      //   totalMembers,
+      //   activeMembers,
+      //   todayCheckIns,
+      //   monthlyRevenue,
+      //   loading: false,
+      // });
 
-      setRecentActivity([]);
+      // setRecentActivity([]);
     } catch (error) {
       notification.error(`Error cargando miembros: ${result.error}`);
       setStats((prev) => ({ ...prev, loading: false }));
