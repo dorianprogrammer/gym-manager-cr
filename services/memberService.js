@@ -33,7 +33,7 @@ export const addMember = async (memberData) => {
 // Get all members
 export const getMembers = async () => {
   try {
-    console.log('hola getMembers');
+    // console.log('hola getMembers');
     
     // const q = query(collection(db, "members"), orderBy("joinDate", "desc"));
     // const querySnapshot = await getDocs(q);

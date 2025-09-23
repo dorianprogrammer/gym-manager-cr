@@ -5,12 +5,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Activity, LogOut, Menu, X, Users, DollarSign, QrCode, BarChart3 } from "lucide-react";
 import ConfirmationModal from "../ui/ConfirmationModal";
-import { useAuth } from "@/hooks/useAuth";
 import { AuthContext } from "@/contexts/AuthContext";
 
 export default function Layout({ children }) {
-  const { user } = useAuth();
-  const { logout } = useContext(AuthContext);
+  const { logout, user } = useContext(AuthContext);
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -27,6 +25,8 @@ export default function Layout({ children }) {
       setLoggingOut(false);
     }
   };
+
+  console.log('user :>> ', user);
 
   const navigation = [
     { name: "Dashboard", href: "/", icon: BarChart3 },

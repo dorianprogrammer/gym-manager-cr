@@ -2,11 +2,9 @@
 
 import React, { useContext } from "react";
 import AdminLogin from "./AdminLogin";
-import { useAuth } from "@/hooks/useAuth";
 import { AuthContext } from "@/contexts/AuthContext";
 
 export default function ProtectedRoute({ children }) {
-  // const { isAuthenticated, loading } = useAuth();
   const { isAuthenticated, loading } = useContext(AuthContext);
 
   if (loading) {

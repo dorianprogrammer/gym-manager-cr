@@ -27,10 +27,10 @@ export default function GymDashboard() {
   const loadDashboardData = async () => {
     try {
 
-      console.log('holaaa');
+      // alert("Cargando datos del dashboard...");
       
       // const { getMewmbers } = await import("../../services/memberService");
-      const { members } = await getMembers();
+      // const { members } = await getMembers();
 
       // const totalMembers = members?.length || 0;
       // const activeMembers = members?.filter((m) => m.isActive)?.length || 0;
