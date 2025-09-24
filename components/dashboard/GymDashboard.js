@@ -1,12 +1,14 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Users, Activity, DollarSign, Calendar, Clock, UserCheck, AlertCircle } from "lucide-react";
 import { formatTime } from "./GymDashboard.helper";
 import StatCard from "../ui/StatCard";
 import { useRouter } from "next/navigation";
 import { useNotification } from "@/hooks/useNotification";
 import { getMembers } from "@/services/memberService";
+import { getTotalStats } from "@/services/statsService";
+import { AuthContext } from "@/contexts/AuthContext";
 
 export default function GymDashboard() {
   const [stats, setStats] = useState({
@@ -19,6 +21,8 @@ export default function GymDashboard() {
   const router = useRouter();
   const [recentActivity, setRecentActivity] = useState([]);
   const notification = useNotification();
+  const { user } = useContext(AuthContext);
+  const [totalStats, setTotalStats] = useState(null);
 
   useEffect(() => {
     loadDashboardData();
@@ -26,9 +30,14 @@ export default function GymDashboard() {
 
   const loadDashboardData = async () => {
     try {
+      const result = await getTotalStats("", user);
+
+      if (result?.success) {
+        console.log("result :>> ", result);
+      }
 
       // alert("Cargando datos del dashboard...");
-      
+
       // const { getMewmbers } = await import("../../services/memberService");
       // const { members } = await getMembers();
 

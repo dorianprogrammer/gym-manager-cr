@@ -26,8 +26,6 @@ export default function Layout({ children }) {
     }
   };
 
-  console.log('user :>> ', user);
-
   const navigation = [
     { name: "Dashboard", href: "/", icon: BarChart3 },
     { name: "Miembros", href: "/members", icon: Users },
@@ -48,7 +46,6 @@ export default function Layout({ children }) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Mobile sidebar */}
       <div className={`fixed inset-0 z-40 lg:hidden ${sidebarOpen ? "" : "hidden"}`}>
         <div className="fixed inset-0 bg-gray-600/75" onClick={() => setSidebarOpen(false)} />
         <div className="relative ml-0 flex w-full max-w-xs flex-1 flex-col bg-white">
@@ -86,8 +83,6 @@ export default function Layout({ children }) {
           </nav>
         </div>
       </div>
-
-      {/* Desktop sidebar */}
       <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
         <div className="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-white">
           <div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
@@ -125,10 +120,7 @@ export default function Layout({ children }) {
           </div>
         </div>
       </div>
-
-      {/* Main column */}
       <div className="flex flex-1 flex-col lg:pl-64">
-        {/* Top bar (mobile) */}
         <div className="sticky top-0 z-10 bg-white pl-1 pt-1 sm:pl-3 sm:pt-3 lg:hidden">
           <button
             type="button"
@@ -138,8 +130,6 @@ export default function Layout({ children }) {
             <Menu className="h-6 w-6" />
           </button>
         </div>
-
-        {/* Header */}
         <header className="bg-white shadow-sm lg:static lg:overflow-y-visible">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
@@ -147,7 +137,6 @@ export default function Layout({ children }) {
                 <Activity className="h-6 w-6 text-blue-600 mr-2" />
                 <h1 className="text-lg font-semibold text-gray-900">Gym Manager</h1>
               </div>
-
               <div className="flex items-center space-x-4 ml-auto">
                 <div className="hidden md:flex items-center">
                   <div className="h-8 w-8 bg-blue-100 rounded-full flex items-center justify-center">
@@ -158,7 +147,6 @@ export default function Layout({ children }) {
                     <p className="text-xs text-gray-500 truncate max-w-32">{user?.email}</p>
                   </div>
                 </div>
-
                 <button
                   type="button"
                   onClick={() => setShowLogoutModal(true)}
@@ -171,15 +159,11 @@ export default function Layout({ children }) {
             </div>
           </div>
         </header>
-
-        {/* Main content */}
         <main className="flex-1">
           <div className="py-6">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">{children}</div>
           </div>
         </main>
-
-        {/* Logout modal */}
         <ConfirmationModal
           isOpen={showLogoutModal}
           onClose={() => setShowLogoutModal(false)}
