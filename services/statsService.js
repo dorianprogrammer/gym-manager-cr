@@ -1,13 +1,11 @@
 import api from "@/lib/api";
 
-export const getTotalStats = async (gymId, user) => {
+export const getTotalStats = async (user) => {
   try {
     const response = await api.post(
       "/stats",
-      { gymId: "W7QUHQqThDLI7pd5nlSE" },
-      {
-        headers: user?.accessToken ? { Authorization: `Bearer ${user.accessToken}` } : {},
-      }
+      { gymId: user?.gymId },
+      { headers: user?.accessToken ? { Authorization: `Bearer ${user.accessToken}` } : {} }
     );
 
     if (response.status !== 200) {

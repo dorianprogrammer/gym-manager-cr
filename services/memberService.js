@@ -10,6 +10,7 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { db } from "../lib/firebase";
+import api from "@/lib/api";
 
 // Add a new member
 export const addMember = async (memberData) => {
@@ -31,19 +32,21 @@ export const addMember = async (memberData) => {
 };
 
 // Get all members
-export const getMembers = async () => {
+export const getMembers = async (user) => {
   try {
-    // console.log('hola getMembers');
-    
-    // const q = query(collection(db, "members"), orderBy("joinDate", "desc"));
-    // const querySnapshot = await getDocs(q);
-    // const members = [];
-    
-    // querySnapshot.forEach((doc) => {
-    //   members.push({ id: doc.id, ...doc.data() });
-    // });
+    const response = await api.post(
+      "/members",
+      { gymId: user?.gymId },
+      {
+        headers: user?.accessToken ? { Authorization: `Bearer ${user.accessToken}` } : {},
+      }
+    );
 
-    return { success: true, members: [], error: null };
+    if (response.status !== 200) {
+      return { success: false, error: "Failed to fetch stats" };
+    }
+
+    return { success: true, members: response?.data?.data || [], error: null };
   } catch (error) {
     console.log("Error fetching members:", error);
     return { success: false, members: [], error: error.message };

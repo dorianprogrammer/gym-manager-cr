@@ -6,7 +6,6 @@ import { formatTime } from "./GymDashboard.helper";
 import StatCard from "../ui/StatCard";
 import { useRouter } from "next/navigation";
 import { useNotification } from "@/hooks/useNotification";
-import { getMembers } from "@/services/memberService";
 import { getTotalStats } from "@/services/statsService";
 import { AuthContext } from "@/contexts/AuthContext";
 
@@ -22,7 +21,6 @@ export default function GymDashboard() {
   const [recentActivity, setRecentActivity] = useState([]);
   const notification = useNotification();
   const { user } = useContext(AuthContext);
-  const [totalStats, setTotalStats] = useState(null);
 
   useEffect(() => {
     loadDashboardData();
@@ -30,32 +28,18 @@ export default function GymDashboard() {
 
   const loadDashboardData = async () => {
     try {
-      const result = await getTotalStats("", user);
+      const result = await getTotalStats(user);
 
       if (result?.success) {
-        console.log("result :>> ", result);
+        setStats({
+          totalMembers: result?.data?.totalMembers,
+          activeMembers: result?.data?.activeMembers,
+          todayCheckIns: result?.data?.checkinsToday,
+          monthlyRevenue: result?.data?.monthlyRevenue,
+          loading: false,
+        });
+        setRecentActivity([]);
       }
-
-      // alert("Cargando datos del dashboard...");
-
-      // const { getMewmbers } = await import("../../services/memberService");
-      // const { members } = await getMembers();
-
-      // const totalMembers = members?.length || 0;
-      // const activeMembers = members?.filter((m) => m.isActive)?.length || 0;
-      // const todayCheckIns = 0;
-
-      // const monthlyRevenue = 0;
-
-      // setStats({
-      //   totalMembers,
-      //   activeMembers,
-      //   todayCheckIns,
-      //   monthlyRevenue,
-      //   loading: false,
-      // });
-
-      // setRecentActivity([]);
     } catch (error) {
       notification.error(`Error cargando miembros: ${result.error}`);
       setStats((prev) => ({ ...prev, loading: false }));

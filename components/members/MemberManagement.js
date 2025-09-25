@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { UserPlus, Trash2 } from "lucide-react";
 import {
   addMember,
@@ -9,6 +9,7 @@ import {
   validateMemberForm,
   getInitialFormData,
   filterMembers,
+  getMembers,
 } from "../../services/memberService";
 import MemberFilters from "./MemberFilters";
 import MemberTable from "./MemberTable";
@@ -18,6 +19,7 @@ import ConfirmationModal from "../ui/ConfirmationModal";
 import { useNotification } from "@/hooks/useNotification";
 import MemberDetailCard from "./MemberDetailCard";
 import BackButton from "../ui/BackButton";
+import { AuthContext } from "@/contexts/AuthContext";
 
 export default function MemberManagement() {
   const notification = useNotification();
@@ -37,6 +39,7 @@ export default function MemberManagement() {
   const [formData, setFormData] = useState(getInitialFormData());
   const [formErrors, setFormErrors] = useState({});
   const [saving, setSaving] = useState(false);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     loadMembers();
@@ -45,15 +48,14 @@ export default function MemberManagement() {
   const loadMembers = async () => {
     setLoading(true);
 
-    const { getMembers } = await import("../../services/memberService");
-    const result = await getMembers();
+    const result = await getMembers(user);
+
     if (result.success) {
       setMembers(result.members);
     } else {
-      console.log('hola');
-      
       notification.error(`Error cargando miembros: ${result.error}`);
     }
+
     setLoading(false);
   };
 
