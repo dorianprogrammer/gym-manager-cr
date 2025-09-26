@@ -7,6 +7,8 @@ import { AuthContext } from "@/contexts/AuthContext";
 export default function ProtectedRoute({ children }) {
   const { isAuthenticated, loading } = useContext(AuthContext);
 
+  console.log('isAuthenticated :>> ', isAuthenticated);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
