@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useContext } from "react";
-import { Users, Activity, DollarSign, Calendar, Clock, UserCheck, AlertCircle } from "lucide-react";
-import { formatTime } from "./GymDashboard.helper";
+import { Users, Activity, DollarSign, Calendar, Clock, UserCheck } from "lucide-react";
 import StatCard from "../ui/StatCard";
 import { useRouter } from "next/navigation";
 import { useNotification } from "@/hooks/useNotification";
@@ -106,43 +105,9 @@ export default function GymDashboard() {
                     </div>
                   ))}
                 </div>
-              ) : recentActivity.length > 0 ? (
-                <div className="flow-root">
-                  <ul className="-mb-8">
-                    {/* {recentActivity.map((activity, index) => (
-                      <li key={activity.id}>
-                        <div className="relative pb-8">
-                          {index !== recentActivity.length - 1 && (
-                            <span className="absolute top-5 left-5 -ml-px h-full w-0.5 bg-gray-200" />
-                          )}
-                          <div className="relative flex items-start space-x-3">
-                            <div className="relative">
-                              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100">
-                                <activity.icon className={`h-5 w-5 ${activity.color}`} />
-                              </div>
-                            </div>
-                            <div className="min-w-0 flex-1">
-                              <div>
-                                <div className="text-sm">
-                                  <span className="font-medium text-gray-900">{activity.message}</span>
-                                </div>
-                                <p className="mt-0.5 text-sm text-gray-500">{formatTime(activity.time)}</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                    ))} */}
-                  </ul>
-                </div>
               ) : (
                 <div className="text-center py-6">
                   <PaymentsCalendar />
-                  {/* <AlertCircle className="mx-auto h-12 w-12 text-gray-400" />
-                  <h3 className="mt-2 text-sm font-medium text-gray-900">No hay actividad reciente</h3>
-                  <p className="mt-1 text-sm text-gray-500">
-                    Cuando los miembros hagan check-in o pagos, aparecerán aquí.
-                  </p> */}
                 </div>
               )}
             </div>

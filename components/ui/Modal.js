@@ -30,17 +30,13 @@ export default function Modal({
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
       <div className="flex min-h-full items-center justify-center p-4 text-center sm:items-start sm:pt-20">
-        {/* Background overlay - more subtle */}
         <div
           className="fixed inset-0 bg-opacity-50 backdrop-blur-sm transition-opacity"
           onClick={handleOverlayClick}
         ></div>
-
-        {/* Modal panel with transparency */}
         <div
           className={`relative transform overflow-hidden rounded-lg bg-white bg-opacity-95 backdrop-blur-md text-left shadow-xl transition-all sm:my-8 sm:w-full ${sizeClasses[size]} border border-gray-200`}
         >
-          {/* Header */}
           {(title || showCloseButton) && (
             <div className="flex items-center justify-between p-4 border-b border-gray-200">
               {title && <h3 className="text-lg font-semibold leading-6 text-gray-900">{title}</h3>}
@@ -55,8 +51,6 @@ export default function Modal({
               )}
             </div>
           )}
-
-          {/* Content */}
           <div className="p-4 sm:p-6">{children}</div>
         </div>
       </div>
